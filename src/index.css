@@ -1,0 +1,102 @@
+/* Global design layer — lifts every page consistently. */
+
+:root {
+  --brand: #b45309;
+  --ink: #1c1917;
+}
+
+html, body, #root { height: 100%; }
+
+/* Slightly larger default type — Tailwind's rem-based sizes scale with this. */
+html { font-size: 17px; }
+
+body {
+  margin: 0;
+  font-family: 'Kantumruy Pro', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  letter-spacing: .005em;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 { letter-spacing: -0.01em; }
+
+/* Latin/numerals read better in Inter; Khmer falls back to Kantumruy Pro. */
+button, input, select, textarea, table {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+::selection { background: color-mix(in srgb, var(--brand) 25%, transparent); }
+
+/* Focus ring everywhere for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Smooth, subtle interaction feedback. */
+button, a, input, select, textarea {
+  transition: background-color .15s ease, color .15s ease,
+              border-color .15s ease, box-shadow .15s ease, transform .08s ease;
+}
+button:active:not(:disabled) { transform: translateY(1px); }
+
+/* Refined scrollbars. */
+* { scrollbar-width: thin; scrollbar-color: #d6d3d1 transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 999px; border: 3px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background: #a8a29e; background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Shared helpers (opt-in; existing Tailwind pages unaffected). */
+.card {
+  background: #fff;
+  border: 1px solid #f0ede9;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(28,25,23,.04), 0 8px 24px -12px rgba(28,25,23,.12);
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fadeUp .28s ease both; }
+
+@keyframes popIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+.pop-in { animation: popIn .18s ease both; }
+
+@keyframes scanline { 0% { top: 6%; } 50% { top: 92%; } 100% { top: 6%; } }
+.scanline { animation: scanline 2.2s ease-in-out infinite; }
+
+/* Welcome-panel motion (login). */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-16px) rotate(5deg); }
+}
+.float-slow   { animation: floatY 6s ease-in-out infinite; }
+.float-slower { animation: floatY 9s ease-in-out infinite; }
+
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1);    opacity: .45; }
+  50%      { transform: scale(1.18); opacity: .8;  }
+}
+.orb       { animation: orbPulse 7s ease-in-out infinite; }
+.orb-delay { animation: orbPulse 9s ease-in-out 1.2s infinite; }
+
+@keyframes ringPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,.35); }
+  100% { box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+}
+.ring-pulse { animation: ringPulse 2.6s ease-out infinite; }
+
+@keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.rise { animation: riseIn .65s cubic-bezier(.22,1,.36,1) both; }
+.d1 { animation-delay: .08s; }
+.d2 { animation-delay: .18s; }
+.d3 { animation-delay: .30s; }
+.d4 { animation-delay: .42s; }
+.d5 { animation-delay: .54s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
